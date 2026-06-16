@@ -1,0 +1,12 @@
+[general]
+import = [
+    "./terafox.toml"
+]
+live_config_reload = true
+
+[font]
+size = 14
+normal = { family="JetBrainsMono Nerd Font", style="Semi-Bold" }
+bold = { family="JetBrainsMono Nerd Font", style="Bold" }
+italic = { family="JetBrainsMono Nerd Font", style="Semi-Bold Italic" }
+bold_italic = { family="JetBrainsMono Nerd Font", style="Bold Italic" }
