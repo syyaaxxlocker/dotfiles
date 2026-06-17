@@ -1,3 +1,7 @@
-^dwl$
-^slstatus$
-^\.git$
+^dwl
+^slstatus
+^\.git
+\.gitignore
+^/LICENSE.*
+^/README*
+^/COPYING

@@ -66,7 +66,7 @@ static const char unknown_str[] = "n/a";
  */
 static const struct arg args[] = {
 	/* function format          argument */
-	{ cpu_perc, " [ CPU: %s%%", NULL },
+	{ cpu_perc, " ø [ CPU: %s%%", NULL },
 	{ temp, " (%s°C) | ", "/sys/class/thermal/thermal_zone2/temp" },
 	{ run_command, "GPU: %s ", "nvidia-smi --query-gpu=memory.used --format=csv,noheader" },
 	{ run_command, "(%s%%", "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits" },
@@ -74,6 +74,6 @@ static const struct arg args[] = {
 	{ ram_used, "RAM: %s ", NULL },
 	{ ram_perc, "(%s%%) | ", NULL },
 	{ run_command, "🎧%s | ", "wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d':' -f2" },
-	{ run_command, "🎙️%s ] ->", "wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | cut -d':' -f2"},
+	{ run_command, "🎤%s ] ->", "wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | cut -d':' -f2"},
 	{ datetime, " %s ", "%F %H:%M" },
 };

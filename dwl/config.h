@@ -10,10 +10,10 @@ static const unsigned int borderpx         = 3;  /* border pixel of windows */
 static const int showbar                   = 1; /* 0 means no bar */
 static const int topbar                    = 1; /* 0 means bottom bar */
 static const char *fonts[]                 = {"JetBrainsMono Nerd Font Mono:size=12:style=Bold"};
-static const char wmenufont[]		   = "JetBrainsMono Nerd Font Mono 12";
-static const char wmenubg[]		   = "1E2124";
-static const char wmenufg[]		   = "4B535A";
-static const char wmenuborder[]		   = "6C757D";
+#define wmenufont "JetBrainsMono Nerd Font Mono 12"
+#define wmenubg	 "1E2124"
+#define wmenufg	"4B535A"
+#define wmenuborder "6C757D"
 static const float rootcolor[]             = COLOR(0x000000ff);
 /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.0f, 0.0f, 0.0f, 1.0f}; /* You can also use glsl colors */
@@ -133,14 +133,21 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-
+#define WMENU_STYLE "-f", wmenufont, "-N", wmenubg, "-M", wmenufg, "-S", wmenuborder
+#define WMENU_STYLE_STR "-f '" wmenufont "' -N '" wmenubg "' -M '" wmenufg "' -S '" wmenuborder "'"
 /* commands */
 static const char *termcmd[] = { "kitty", NULL };
-static const char *menucmd[] = { "wmenu-run", "-p", "Run:", "-f", wmenufont, "-N", wmenubg, "-M", wmenufg, "-S", wmenuborder, NULL };
+static const char *menucmd[] = { "wmenu-run", "-p", ">", WMENU_STYLE,  NULL };
 static const char *volumeup[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+", NULL };
+static const char *cliphistmenu[] = {"sh", "-c", "cliphist list | wmenu -l 5 -p \">\" " WMENU_STYLE_STR " | cliphist decode | wl-copy", NULL };
 static const char *volumedown[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-", NULL };
 static const char *volumemute[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
 static const char *micromute[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SOURCE@", "toggle", NULL };
+static const char *cmusnext[] = { "/usr/bin/cmus-remote", "-C", "player-next", NULL };
+static const char *cmusprev[] = { "/usr/bin/cmus-remote", "-C", "player-prev", NULL };
+static const char *cmusstate[] = { "sh", "-c", "~/.config/scripts/dwl/cmusstate.sh", NULL };
+static const char *grim[] = {"sh", "-c", "grim - | tee ~/Pictures/screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png | wl-copy", NULL };
+static const char *grimslurp[] = {"sh", "-c", "grim -g \"$(slurp)\" - | tee ~/Pictures/screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png | wl-copy", NULL };
 
 static const Key keys[] = {
 	/* Note that Shift changes certain key codes: 2 -> at, etc. */
@@ -151,6 +158,12 @@ static const Key keys[] = {
 	{ MODKEY,		     XKB_KEY_Down,	  spawn,	    {.v = volumedown} },
 	{ MODKEY,		     XKB_KEY_F4,	  spawn,	    {.v = volumemute} },
 	{ MODKEY,		     XKB_KEY_Pause,	  spawn,	    {.v = micromute} },
+	{ MODKEY|WLR_MODIFIER_ALT,   XKB_KEY_b,		  spawn,	    {.v = cmusnext} },
+	{ MODKEY|WLR_MODIFIER_ALT,   XKB_KEY_x,		  spawn,	    {.v = cmusprev} },
+	{ MODKEY,   		     XKB_KEY_F7,	  spawn,	    {.v = cmusstate} },
+	{ 0,			     XKB_KEY_Print,	  spawn,	    {.v = grim} },
+	{ 0|WLR_MODIFIER_SHIFT,      XKB_KEY_Print,	  spawn, 	    {.v = grimslurp} },
+	{ MODKEY,		     XKB_KEY_slash,	  spawn,       	    {.v = cliphistmenu} },
 	{ MODKEY,                    XKB_KEY_b,           togglebar,        {0} },
 	{ MODKEY,                    XKB_KEY_j,           focusstack,       {.i = +1} },
 	{ MODKEY,                    XKB_KEY_k,           focusstack,       {.i = -1} },
@@ -169,10 +182,10 @@ static const Key keys[] = {
 	{ MODKEY,                    XKB_KEY_e,           togglefullscreen, {0} },
 	{ MODKEY,                    XKB_KEY_0,           view,             {.ui = ~0} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_parenright,  tag,              {.ui = ~0} },
-	{ MODKEY,                    XKB_KEY_comma,       focusmon,         {.i = WLR_DIRECTION_LEFT} },
-	{ MODKEY,                    XKB_KEY_period,      focusmon,         {.i = WLR_DIRECTION_RIGHT} },
-	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_less,        tagmon,           {.i = WLR_DIRECTION_LEFT} },
-	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_greater,     tagmon,           {.i = WLR_DIRECTION_RIGHT} },
+	//{ MODKEY,                    XKB_KEY_comma,       focusmon,         {.i = WLR_DIRECTION_LEFT} },
+	//{ MODKEY,                    XKB_KEY_period,      focusmon,         {.i = WLR_DIRECTION_RIGHT} },
+	//{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_less,        tagmon,           {.i = WLR_DIRECTION_LEFT} },
+	//{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_greater,     tagmon,           {.i = WLR_DIRECTION_RIGHT} },
 	TAGKEYS(          XKB_KEY_1, XKB_KEY_exclam,                        0),
 	TAGKEYS(          XKB_KEY_2, XKB_KEY_at,                            1),
 	TAGKEYS(          XKB_KEY_3, XKB_KEY_numbersign,                    2),

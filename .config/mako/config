@@ -1,0 +1,16 @@
+font=JetBrainsMono Nerd Font Mono 12
+background-color=#4B535Aff
+text-color=#ffffffff
+border-size=3
+border-color=#6C757Dff
+
+anchor=bottom-center
+
+default-timeout=5000
+
+layer=overlay
+
+border-radius=4
+
+format=<b>%s</b>\n%b
+
