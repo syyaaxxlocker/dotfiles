@@ -1,16 +1,20 @@
-font=JetBrainsMono Nerd Font Mono 12
-background-color=#4B535Aff
-text-color=#ffffffff
-border-size=3
-border-color=#6C757Dff
+background-color=#1E2124F5
+text-color=#C4C7C5FF
+border-color=#6C757DFF
+border-size=2
+border-radius=6
+padding=12
+margin=10
+font=monospace regular 12
+default-timeout=3500
+width=340
 
-anchor=bottom-center
+[urgency=low]
+border-color=#444444FF
+text-color=#C4C7C5CC
 
-default-timeout=5000
-
-layer=overlay
-
-border-radius=4
-
-format=<b>%s</b>\n%b
-
+[urgency=critical]
+background-color=#4B535AFF
+text-color=#ffffffFF
+border-color=#6C757DFF
+default-timeout=0

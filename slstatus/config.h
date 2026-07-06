@@ -75,5 +75,5 @@ static const struct arg args[] = {
 	{ ram_perc, "(%s%%) | ", NULL },
 	{ run_command, "🎧%s | ", "wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d':' -f2" },
 	{ run_command, "🎤%s ] ->", "wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | cut -d':' -f2"},
-	{ datetime, " %s ", "%F %H:%M" },
+	{ datetime, " %s ", "%F %H:%M:%S" },
 };
