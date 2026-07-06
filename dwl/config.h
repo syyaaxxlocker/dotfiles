@@ -148,6 +148,7 @@ static const char *cmusprev[] = { "/usr/bin/cmus-remote", "-C", "player-prev", N
 static const char *cmusstate[] = { "sh", "-c", "~/.config/scripts/dwl/cmusstate.sh", NULL };
 static const char *grim[] = {"sh", "-c", "grim - | tee ~/Pictures/screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png | wl-copy", NULL };
 static const char *grimslurp[] = {"sh", "-c", "grim -g \"$(slurp)\" - | tee ~/Pictures/screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png | wl-copy", NULL };
+static const char *lockscreen[] = {"hyprlock", NULL};
 
 static const Key keys[] = {
 	/* Note that Shift changes certain key codes: 2 -> at, etc. */
@@ -164,6 +165,7 @@ static const Key keys[] = {
 	{ 0,			     XKB_KEY_Print,	  spawn,	    {.v = grim} },
 	{ 0|WLR_MODIFIER_SHIFT,      XKB_KEY_Print,	  spawn, 	    {.v = grimslurp} },
 	{ MODKEY,		     XKB_KEY_slash,	  spawn,       	    {.v = cliphistmenu} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_l,		  spawn,	    {.v = lockscreen} },
 	{ MODKEY,                    XKB_KEY_b,           togglebar,        {0} },
 	{ MODKEY,                    XKB_KEY_j,           focusstack,       {.i = +1} },
 	{ MODKEY,                    XKB_KEY_k,           focusstack,       {.i = -1} },
@@ -173,7 +175,7 @@ static const Key keys[] = {
 	{ MODKEY,                    XKB_KEY_l,           setmfact,         {.f = +0.05f} },
 	{ MODKEY,                    XKB_KEY_Return,      zoom,             {0} },
 	{ MODKEY,                    XKB_KEY_Tab,         view,             {0} },
-	{ MODKEY,		     XKB_KEY_q,           killclient,       {0} },
+	{ 0|WLR_MODIFIER_CTRL,	     XKB_KEY_q,           killclient,       {0} },
 	{ MODKEY,                    XKB_KEY_t,           setlayout,        {.v = &layouts[0]} },
 	{ MODKEY,                    XKB_KEY_f,           setlayout,        {.v = &layouts[1]} },
 	{ MODKEY,                    XKB_KEY_m,           setlayout,        {.v = &layouts[2]} },
@@ -182,10 +184,10 @@ static const Key keys[] = {
 	{ MODKEY,                    XKB_KEY_e,           togglefullscreen, {0} },
 	{ MODKEY,                    XKB_KEY_0,           view,             {.ui = ~0} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_parenright,  tag,              {.ui = ~0} },
-	//{ MODKEY,                    XKB_KEY_comma,       focusmon,         {.i = WLR_DIRECTION_LEFT} },
-	//{ MODKEY,                    XKB_KEY_period,      focusmon,         {.i = WLR_DIRECTION_RIGHT} },
-	//{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_less,        tagmon,           {.i = WLR_DIRECTION_LEFT} },
-	//{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_greater,     tagmon,           {.i = WLR_DIRECTION_RIGHT} },
+	{ MODKEY,                    XKB_KEY_comma,       focusmon,         {.i = WLR_DIRECTION_LEFT} },
+	{ MODKEY,                    XKB_KEY_period,      focusmon,         {.i = WLR_DIRECTION_RIGHT} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_less,        tagmon,           {.i = WLR_DIRECTION_LEFT} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_greater,     tagmon,           {.i = WLR_DIRECTION_RIGHT} },
 	TAGKEYS(          XKB_KEY_1, XKB_KEY_exclam,                        0),
 	TAGKEYS(          XKB_KEY_2, XKB_KEY_at,                            1),
 	TAGKEYS(          XKB_KEY_3, XKB_KEY_numbersign,                    2),
