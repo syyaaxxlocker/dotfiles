@@ -64,15 +64,11 @@ static const char unknown_str[] = "n/a";
  * wifi_essid          WiFi ESSID                      interface name (wlan0)
  * wifi_perc           WiFi signal in percent          interface name (wlan0)
  */
+
 static const struct arg args[] = {
 	/* function format          argument */
-	{ cpu_perc, " ø [ CPU: %s%%", NULL },
-	{ temp, " (%s°C) | ", "/sys/class/thermal/thermal_zone2/temp" },
-	{ run_command, "GPU: %s ", "nvidia-smi --query-gpu=memory.used --format=csv,noheader" },
-	{ run_command, "(%s%%", "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits" },
-	{ run_command, " : %s°C) | ", "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits" },
-	{ ram_used, "RAM: %s ", NULL },
-	{ ram_perc, "(%s%%) | ", NULL },
+	{ cat, " ø [%s] ", "/tmp/current_net_iface" },
+	{ ram_used, "[ RAM: %s | ", NULL },
 	{ run_command, "🎧%s | ", "wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d':' -f2" },
 	{ run_command, "🎤%s ] ->", "wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | cut -d':' -f2"},
 	{ datetime, " %s ", "%F %H:%M:%S" },

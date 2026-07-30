@@ -9,11 +9,7 @@ static const int bypass_surface_visibility = 0;  /* 1 means idle inhibitors will
 static const unsigned int borderpx         = 3;  /* border pixel of windows */
 static const int showbar                   = 1; /* 0 means no bar */
 static const int topbar                    = 1; /* 0 means bottom bar */
-static const char *fonts[]                 = {"JetBrainsMono Nerd Font Mono:size=12:style=Bold"};
-#define wmenufont "JetBrainsMono Nerd Font Mono 12"
-#define wmenubg	 "1E2124"
-#define wmenufg	"4B535A"
-#define wmenuborder "6C757D"
+static const char *fonts[]                 = {"Roboto Mono Medium:size=12:style=SemiBold"};
 static const float rootcolor[]             = COLOR(0x000000ff);
 /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.0f, 0.0f, 0.0f, 1.0f}; /* You can also use glsl colors */
@@ -33,14 +29,16 @@ static int log_level = WLR_ERROR;
 /* Autostart */
 static const char *const autostart[] = {
         "wlr-randr", "--output", "HDMI-A-1", "--mode", "2560x1440@143.912003Hz", NULL,
-        "sh", "-c", "swaybg -i ~/Pictures/wallpapers/nasa.jpg", NULL,
+        "sh", "-c", "swaybg -i ~/Pictures/wallpapers/wall.png", NULL,
         NULL /* terminate */
 };
 
 static const Rule rules[] = {
-	/* app_id             title       tags mask     isfloating   monitor */
-	{ "v2rayN",    NULL,       1 << 5,            1,           -1 }, /* Start on currently visible tags floating, not tiled */
-	{ "gta_sa.exe",  NULL,       1 << 6,       0,           -1 }, /* Start on ONLY tag "9" */
+	/* app_id                       title           tags mask       isfloating      monitor */
+	{ "v2rayN",                     NULL,           1 << 5,         1,              -1 }, /* Start on currently visible tags floating, not tiled */
+	{ "gta_sa.exe",                 NULL,           1 << 6,         0,              -1 }, /* Start on ONLY tag "9" */
+    { "org.telegram.desktop",       NULL,           1 << 4,             1,              -1 },
+    { "google-chrome-unstable",     NULL,           1 << 8,         0,              -1 }
     /* default/example rule: can be changed but cannot be eliminated; at least one rule must exist */
 };
 
@@ -73,7 +71,7 @@ static const struct xkb_rule_names xkb_rules = {
 	.model = "pc86",
 	.layout = "us,ru",
 	.variant = "",
-	.options = "grp:alt_shift_toggle",
+	.options = "grp:caps_toggle",
 };
 
 static const int repeat_rate = 25;
@@ -133,21 +131,28 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-#define WMENU_STYLE "-f", wmenufont, "-N", wmenubg, "-M", wmenufg, "-S", wmenuborder
-#define WMENU_STYLE_STR "-f '" wmenufont "' -N '" wmenubg "' -M '" wmenufg "' -S '" wmenuborder "'"
+
+/* wmenu settings */
+#define WMENUFONT "Roboto Mono Medium 12"
+#define WMENUBG	 "1E2124"
+#define WMENUFG	"4B535A"
+#define WMENUBORDER "6C757D"
+#define WMENU_STYLE "-f", WMENUFONT, "-N", WMENUBG, "-M", WMENUFG, "-S", WMENUBORDER
+#define WMENU_STYLE_STR "-f '" WMENUFONT "' -N '" WMENUBG "' -M '" WMENUFG "' -S '" WMENUBORDER "'"
+
 /* commands */
 static const char *termcmd[] = { "kitty", NULL };
 static const char *menucmd[] = { "wmenu-run", "-p", ">", WMENU_STYLE,  NULL };
-static const char *volumeup[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+", NULL };
 static const char *cliphistmenu[] = {"sh", "-c", "cliphist list | wmenu -l 5 -p \">\" " WMENU_STYLE_STR " | cliphist decode | wl-copy", NULL };
+static const char *volumeup[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+", NULL };
 static const char *volumedown[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-", NULL };
 static const char *volumemute[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
 static const char *micromute[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SOURCE@", "toggle", NULL };
 static const char *cmusnext[] = { "/usr/bin/cmus-remote", "-C", "player-next", NULL };
 static const char *cmusprev[] = { "/usr/bin/cmus-remote", "-C", "player-prev", NULL };
 static const char *cmusstate[] = { "sh", "-c", "~/.config/scripts/dwl/cmusstate.sh", NULL };
-static const char *grim[] = {"sh", "-c", "grim - | tee ~/Pictures/screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png | wl-copy", NULL };
-static const char *grimslurp[] = {"sh", "-c", "grim -g \"$(slurp)\" - | tee ~/Pictures/screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png | wl-copy", NULL };
+static const char *grim[] = {"sh", "-c", "grim - | tee ~/Pictures/Screenshots/$(date +'%Y-%m-%d_%H:%M:%S').png | wl-copy", NULL };
+static const char *grimslurp[] = {"sh", "-c", "grim -g \"$(slurp)\" - | tee ~/Pictures/Screenshots/$(date +'%Y-%m-%d_%H:%M:%S').png | wl-copy", NULL };
 static const char *lockscreen[] = {"hyprlock", NULL};
 
 static const Key keys[] = {
@@ -155,17 +160,17 @@ static const Key keys[] = {
 	/* modifier                  key                  function          argument */
 	{ MODKEY,                    XKB_KEY_p,           spawn,            {.v = menucmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Return,      spawn,            {.v = termcmd} },
-	{ MODKEY,		     XKB_KEY_Up,	  spawn,	    {.v = volumeup} },
-	{ MODKEY,		     XKB_KEY_Down,	  spawn,	    {.v = volumedown} },
-	{ MODKEY,		     XKB_KEY_F4,	  spawn,	    {.v = volumemute} },
-	{ MODKEY,		     XKB_KEY_Pause,	  spawn,	    {.v = micromute} },
-	{ MODKEY|WLR_MODIFIER_ALT,   XKB_KEY_b,		  spawn,	    {.v = cmusnext} },
-	{ MODKEY|WLR_MODIFIER_ALT,   XKB_KEY_x,		  spawn,	    {.v = cmusprev} },
-	{ MODKEY,   		     XKB_KEY_F7,	  spawn,	    {.v = cmusstate} },
-	{ 0,			     XKB_KEY_Print,	  spawn,	    {.v = grim} },
-	{ 0|WLR_MODIFIER_SHIFT,      XKB_KEY_Print,	  spawn, 	    {.v = grimslurp} },
-	{ MODKEY,		     XKB_KEY_slash,	  spawn,       	    {.v = cliphistmenu} },
-	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_l,		  spawn,	    {.v = lockscreen} },
+	{ MODKEY,		             XKB_KEY_Up,	      spawn,	        {.v = volumeup} },
+	{ MODKEY,		             XKB_KEY_Down,	      spawn,	        {.v = volumedown} },
+	{ MODKEY,		             XKB_KEY_F4,	      spawn,	        {.v = volumemute} },
+	{ MODKEY,		             XKB_KEY_Pause, 	  spawn,    	    {.v = micromute} },
+	{ MODKEY|WLR_MODIFIER_ALT,   XKB_KEY_b,		      spawn,	        {.v = cmusnext} },
+	{ MODKEY|WLR_MODIFIER_ALT,   XKB_KEY_x,		      spawn,	        {.v = cmusprev} },
+	{ MODKEY,   		         XKB_KEY_F7,	      spawn,	        {.v = cmusstate} },
+	{ 0,			             XKB_KEY_Print,	      spawn,	        {.v = grim} },
+	{ 0|WLR_MODIFIER_SHIFT,      XKB_KEY_Print,	      spawn, 	        {.v = grimslurp} },
+	{ MODKEY,		             XKB_KEY_slash,	      spawn,       	    {.v = cliphistmenu} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_l,		      spawn,	        {.v = lockscreen} },
 	{ MODKEY,                    XKB_KEY_b,           togglebar,        {0} },
 	{ MODKEY,                    XKB_KEY_j,           focusstack,       {.i = +1} },
 	{ MODKEY,                    XKB_KEY_k,           focusstack,       {.i = -1} },
