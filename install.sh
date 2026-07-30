@@ -21,7 +21,10 @@ print_error() {
 }
 
 function setup_pacmanconf() {
-    
+    sudo cp /etc/pacman.conf /etc/pacman.conf.bak || true
+    sudp cp ./etc/pacman.conf /etc/pacman.conf
+
+    sudo pacman -Syu --noconfirm    
 }
 
 function install_core_deps() {

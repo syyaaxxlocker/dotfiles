@@ -1,5 +1,7 @@
 ^dwl
 ^slstatus
+^scripts
+^etc
 ^\.git
 \.gitignore
 ^/LICENSE.*
