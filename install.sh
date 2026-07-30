@@ -22,7 +22,7 @@ print_error() {
 
 function setup_pacmanconf() {
     sudo cp /etc/pacman.conf /etc/pacman.conf.bak || true
-    sudp cp ./etc/pacman.conf /etc/pacman.conf
+    sudo cp ./etc/pacman.conf /etc/pacman.conf
 
     sudo pacman -Syu --noconfirm    
 }
@@ -107,15 +107,16 @@ function main() {
 
     install_core_deps
     ensure_yay
+    setup_pacmanconf
 
-    print_info "Install DWL dependencies."
-    install_pkgs libinput wayland wlroots0.19 libxkbcommon wayland-protocols pkg-config libxcb xcb-util-wm xorg-xwayland fcft tllist wmenu libxcursor
+#   print_info "Install DWL dependencies."
+#   install_pkgs libinput wayland wlroots0.19 libxkbcommon wayland-protocols pkg-config libxcb xcb-util-wm xorg-xwayland fcft tllist wmenu libxcursor
 
     print_info "Install utilities and tools packages."
     install_pkgs kitty wl-clipboard wlr-randr grim slurp ranger vim nano stow swaybg wget python-pillow htop fastfetch cliphist fd tmux hyprlock mako mupdf-gl
 
-    print_info "Install Audio and XDG packages."
-    install_pkgs wireplumber pipewire pipewire-pulse xdg-desktop-portal xdg-desktop-portal-wlr xdg-desktop-portal-gtk
+    print_info "Install Audio and Drivers packages."
+    install_pkgs wireplumber pipewire pipewire-pulse xdg-desktop-portal xdg-desktop-portal-wlr xdg-desktop-portal-gtk lib32-nvidia-utils lib32-nvidia-libgl
 
     print_info "Install programs packages."
     install_pkgs obs-studio discord telegram-desktop obsidian wine-staging wine-mono winetricks zathura zathura-pdf-mupdf mpv
