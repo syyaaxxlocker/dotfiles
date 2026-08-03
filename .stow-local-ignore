@@ -4,6 +4,7 @@
 ^etc
 ^\.git
 \.gitignore
+^/install.sh
 ^/LICENSE.*
 ^/README*
 ^/COPYING

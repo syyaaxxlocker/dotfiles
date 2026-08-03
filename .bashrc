@@ -21,6 +21,6 @@ function git_prompt() {
 
 alias ls='ls -X --color=auto'
 alias grep='grep --color=auto'
-PS1="${GREEN}\u@\h${RESET}:${BLUE}\W${RESET}\$(git_prompt)\$ "
-
-. "$HOME/.local/bin/env"
+HISTFILESIZE=20000
+HISTTIMEFORMAT="%F %T "
+PS1="${GREEN}\u@\h${RESET}:${BLUE}\w${RESET}\$(git_prompt)\$ "
