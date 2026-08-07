@@ -1,10 +1,9 @@
 #!/bin/bash
 
 args=("$@")
-wmenu_cmd=(wmenu -p "Select server: " -l 4 -f "Roboto Mono Medium 12" -N 1E2124 -M 4B535A -S 6C757D)
 
-choice=$(samp-cli --list | sed '1d' | nl -w1 -s'. ' | "${wmenu_cmd[@]}" | cut -d'.' -f1)
+fuzzel_cmd=(fuzzel --dmenu)
 
-echo $choice
+choice=$(samp-cli --list | sed '1d' | nl -w1 -s'. ' | ${fuzzel_cmd[@]}| cut -d'.' -f1)
 
 printf "%s\n" "$choice" | "samp-cli" "${args[@]}"
