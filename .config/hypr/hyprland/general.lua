@@ -1,4 +1,7 @@
 hl.monitor({ output = "HDMI-A-1", mode = "2560x1440@143.91Hz", position = "auto", scale = "auto" })
+hl.env("QT_QPA_PLATFORMTHEME", "qt5ct")
+hl.env("QT_QPA_PLATFORM", "wayland;xcb")
+hl.env("GTK_THEME", "Adwaita:dark")
 
 hl.config({
     xwayland = {

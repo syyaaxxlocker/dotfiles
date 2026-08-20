@@ -40,3 +40,5 @@ hl.bind("SHIFT + Print", hl.dsp.exec_cmd('grim -g "$(slurp)" - | tee ~/Pictures/
 hl.bind("Print", hl.dsp.exec_cmd('grim - | tee ~/Pictures/screenshots/$(date +"%Y-%m-%d_%H-%M-%S").png | wl-copy && notify-send "Screenshot saved successfully" "$(date +"%Y-%m-%d_%H-%M-%S").png"'), { locked = true} )
 
 hl.bind("SUPER + Period", hl.dsp.exec_cmd(clipboardMenu), { locked = true })
+
+hl.bind("SUPER + L", hl.dsp.exec_cmd("hyprlock"), { locked = true })

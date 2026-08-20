@@ -1,0 +1,46 @@
+@define-color bg #191B1A;                                                                            
+@define-color fg #e0e2e1;                                                                            
+@define-color hover_bg #3c3836;                                                                      
+@define-color hover_fg #d6d6d6;                                                                      
+@define-color accent #1a6e4d;
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "RobotoMono Nerd Font";
+    font-size: 14;
+    min-height: 0;
+    color: @fg;
+}
+
+window#waybar {
+    background: @bg;
+    padding-right: 24px;
+}
+
+#workspaces button {
+    padding: 0 3px;
+}
+#workspaces button label {
+    padding: 0 3px;
+}
+
+#workspaces button.active label {
+    color: @fg;
+}
+
+#workspaces button.active {
+    background: @accent;
+}
+
+#workspaces button:hover {
+    background: @hover_bg;
+}
+
+#weather, #clock, #idle_inhibitor, #tray, #network, #language, #power {
+    padding: 0 5px;
+}
+
+#idle_inhibitor.activated {
+    background: @accent;
+}

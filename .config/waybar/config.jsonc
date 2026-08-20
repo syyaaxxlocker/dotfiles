@@ -1,0 +1,91 @@
+// -*- mode: jsonc -*-
+{
+    // "layer": "top", // Waybar at top layer
+    // "position": "bottom", // Waybar position (top|bottom|left|right)
+    "height": 14, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 4, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "custom/weather",
+        "clock"
+    ],
+    "modules-right": [
+        "mpris",
+        "tray",
+        "network",
+        "hyprland/language",
+        "idle_inhibitor",
+        "custom/power"
+    ],
+    "hyprland/workspaces": {
+        "icon-size": 12,
+        "format": "{icon}",
+        "format-icons": {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "magic": "m"
+        }
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": " ",
+            "deactivated": " "
+        }
+    },
+    "mpris": {
+        "format": "{player_icon} {artist} - {title}",
+        "format-paused": "{status_icon} <i>{artist} - {title}</i>",
+        "max-length": 30,
+        "player-icons": {
+            "default": "▶",
+            "spotify": "",
+            "mpv": ""
+        },
+        "status-icons": {
+            "paused": "⏸"
+        }
+    },
+    "tray": {
+        "spacing": 10,
+        "icons": {
+           "TelegramDesktop": "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png",
+           "Arizona Games Launcher.exe": "$HOME/.local/share/icons/hicolor/16x16/apps/arizona.png"
+        }
+    },
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><big>{calendar}</big></tt>",
+        "format": "{:%Y-%m-%d %H:%M}"
+    },
+    "custom/weather": {
+        "class": "weather",
+        "exec": "curl -s 'https://wttr.in/Blagoveshchensk?format=%c%t'",
+        "format": " {} ",
+        "interval": 600,
+        "tooltip": false
+    },
+    "network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        "format-wifi": "[{ifname}] {ipaddr}",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": "Disconnected ⚠",
+        "tooltip": false
+    },
+    "custom/power": {
+        "class": "power",
+        "format": "⏻ ",
+        "tooltip": false,
+        "on-click": "wlogout"
+    }
+}

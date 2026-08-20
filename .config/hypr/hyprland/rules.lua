@@ -15,7 +15,7 @@ hl.window_rule({
         title = "Arizona"
     },
     workspace = 7
-})
+}) 
 
 hl.window_rule({
     match = {
@@ -64,4 +64,14 @@ hl.window_rule({
     },
     center = true,
     float = true
+})
+
+hl.window_rule({
+    name = "Obsidian Settings",
+    match = {
+        class = "md.obsidian.Obsidian",
+        title = "Настройки.*"
+    },
+    float = true,
+    center = true
 })
