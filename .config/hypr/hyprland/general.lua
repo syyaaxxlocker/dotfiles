@@ -1,6 +1,12 @@
 hl.monitor({ output = "HDMI-A-1", mode = "2560x1440@143.91Hz", position = "auto", scale = "auto" })
+
+hl.env("MOZ_ENABLE_WAYLAND", "1")
+
 hl.env("QT_QPA_PLATFORMTHEME", "qt5ct")
-hl.env("QT_QPA_PLATFORM", "wayland;xcb")
+hl.env("QT_QPA_PLATFORM", "wayland")
+hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
+hl.env("QT_AUTO_SCREEN_SCALE_FACTOR", "1")
+
 hl.env("GTK_THEME", "Adwaita:dark")
 
 hl.config({
@@ -23,7 +29,7 @@ hl.config({
 
         resize_on_border = false,
 
-        layout = "master",
+        layout = "dwindle",
         
         snap = {
             enabled = true,
@@ -33,8 +39,8 @@ hl.config({
         }
     },
     decoration = {
-        rounding = 0,
-        rounding_power = 0,
+        rounding = 4,
+        rounding_power = 2,
 
         active_opacity = 1.0,
         inactive_opacity = 1.0,

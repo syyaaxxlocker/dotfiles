@@ -77,14 +77,15 @@
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "[{ifname}] {ipaddr}",
+        "format-wifi": "[{ifname}] {ipaddr} ({bandwidthDownBits} ↑ {bandwidthUpBits})",
         "format-linked": "{ifname} (No IP)",
         "format-disconnected": "Disconnected ⚠",
+        "interval": 1,
         "tooltip": false
     },
     "custom/power": {
         "class": "power",
-        "format": "⏻ ",
+        "format": "⏻  ",
         "tooltip": false,
         "on-click": "wlogout"
     }
